@@ -18,4 +18,31 @@ public class ServiceImpl implements Service {
     public Specialist read(long id) {
         return repo.getOne(id);
     }
+
+    @Override
+    public Specialist create(Specialist specialist) {
+        return repo.save(specialist);
+    }
+
+    @Override
+    public boolean update(Specialist specialist) {
+        Specialist specialistFromBase = repo.getOne(specialist.getId());
+        if (specialistFromBase == null) {
+            return false;
+        }
+        specialistFromBase = specialist;
+        repo.save(specialistFromBase);
+        return true;
+    }
+
+    @Override
+    public boolean delete(long id) {
+        Specialist specialist = repo.getOne(id);
+        if (specialist == null) {
+            return false;
+        }
+        repo.deleteById(id);
+        return true;
+    }
+
 }
